@@ -17,11 +17,11 @@ gpio.setup(25, gpio.OUT)
 
 def screen(mosq, obj, msg):
     if (str(msg.payload) == "b\'1\'"):
-        #send gpio event
+        gpio.output(25, 1)
         print("Screen Down")
 
     elif (str(msg.payload) == "b\'0\'"):
-        #send gpio event
+        gpio.output(25, 0)
         print("Screen Up")
     #print(str(msg.payload))
 
@@ -39,7 +39,7 @@ mqttc.on_message = unhandled_msg
 
 mqttc.connect("10.0.0.24", 1883, 60)
 
-mqttc.subscribe("Basement/AV/#", 0)
+mqttc.subscribe("Basement/#", 0)
 
 mqttc.loop_forever()
 
