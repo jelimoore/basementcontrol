@@ -40,7 +40,7 @@ def pwr(mosq, obj, msg):
     elif (str(msg.payload) == "b\'0\'"):
         send_projector("10.0.253.41",7142,power_off)
         print("Projector off")
-    print(str(msg.payload))
+    #print(str(msg.payload))
 
 def vol(mosq, obj, msg):
     # to be completed
