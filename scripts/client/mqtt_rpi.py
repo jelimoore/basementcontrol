@@ -6,7 +6,12 @@ import paho.mqtt.client as mqtt
 import socket
 import time
 import sys
-import gpio
+import RPi.GPIO as gpio
+
+# initiate GPIO
+gpio.setmode(gpio.BCM)
+gpio.setup(25, gpio.OUT)
+
 
 ## BEGIN CALLBACK FUNCTIONS
 
