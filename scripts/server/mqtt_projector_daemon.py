@@ -11,6 +11,9 @@ power_on = '020000000002'
 power_off = '020100000003'
 get_info = '039500000098'
 volume = '0310000005050000'
+vga = '0203000002010109'
+analogvid = '020300000201060E'
+dvi = '0203000002011A22'
 
 def send_projector(ip_value, port_value, hex_data):
 
@@ -62,9 +65,14 @@ def vol(mosq, obj, msg):
         print(checksum)
         print("\r")
 
-def input(mosq, obj, msg):
-   # to be completed
-   print("input")
+def input_vga(mosq, obj, msg):
+    send_projector("10.0.253.41",7142,vga)
+
+def input_analog(mosq, obj, msg):
+    send_projector("10.0.253.41",7142,analogvid)
+
+def input_dvi(mosq, obj, msg):
+    send_projector("10.0.253.41",7142,dvi)
 
 def unhandled_msg(mosq, obj, msg):
     print("Unhandled Message: " + msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
@@ -73,7 +81,9 @@ mqttc = mqtt.Client()
 
 mqttc.message_callback_add("Basement/AV/Projector/Power", pwr)
 mqttc.message_callback_add("Basement/AV/Projector/Volume", vol)
-mqttc.message_callback_add("Basement/AV/Projector/Input", input)
+mqttc.message_callback_add("Basement/AV/Projector/Input/VGA", input_vga)
+mqttc.message_callback_add("Basement/AV/Projector/Input/Analog", input_analog)
+mqttc.message_callback_add("Basement/AV/Projector/Input/DVI", input_dvi)
 
 mqttc.on_message = unhandled_msg				# for everything that doesn't match
 
